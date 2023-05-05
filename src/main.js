@@ -3,8 +3,8 @@
 // 1,000,000 hours
 //
 // Creative Tilt Justification:
-// I will do a corny 90's cartoon style
-// rap retelling the Greek myth of Sisyphus.
+// I will do some voice acting for
+// the player character.
 // Technical Tilt Justification:
 // I will add a combat system that involves using
 // the boulder as a projectile.
@@ -37,5 +37,12 @@ let game = new Phaser.Game(config);
 // reserve keyboard names
 let keyF, keyR, keyM, keyLEFT, keyRIGHT;
 // set UI sizes
-//let borderUISize = game.config.height / 15;
-//let borderPadding = borderUISize / 3;
+let centerX = game.config.width/2;
+let centerY = game.config.height/2;
+let w = game.config.width;
+let h = game.config.height;
+const textSpacer = 64;
+let level;
+let highScore;
+let newHighScore = false;
+let cursors;

@@ -3,11 +3,6 @@ class Menu extends Phaser.Scene {
         super("menuScene");
     }
 
-    preload() {
-        // load audio
-        // load title screen image
-    }
-
     create() {
         // Adds tile sprite for the title screen
 
@@ -48,28 +43,13 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            // easy mode
-            game.settings = {
-                alienSpeed: 5,
-                spaceshipSpeed: 3,
-                gameTimer: 60000,
-                speedTimer: 30000,   // Time until speed increases
-            }
+            // starts the game
             this.sound.play('sfx_select');
             this.music.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            // hard mode
-            game.settings = {
-                alienSpeed: 6,
-                spaceshipSpeed: 4,
-                gameTimer: 45000,
-                speedTimer: 30000,  // Time until speed increases
-            }
-            this.sound.play('sfx_select');
-            this.music.stop();
-            this.scene.start('playScene');
+            // Display help/instructions
         }
     }
 }
