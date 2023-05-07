@@ -13,7 +13,7 @@
 'use strict';
 
 let config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     width: 640,
     height: 780,
     scale: {

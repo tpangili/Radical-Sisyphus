@@ -15,7 +15,6 @@ class Play extends Phaser.Scene {
          // set up player paddle (physics sprite) and set properties
          player = this.physics.add.sprite(centerX, (h - 100), 'sisyphus').setOrigin(0.5);
          player.setCollideWorldBounds(true);
-         player.setBounce(0.5);
          player.setImmovable();
          player.setMaxVelocity(600, 0);
          player.setDragX(200);
@@ -60,6 +59,8 @@ class Play extends Phaser.Scene {
                 player.body.velocity.x -= playerVelocity;
             } else if(cursors.right.isDown) {
                 player.body.velocity.x += playerVelocity;
+            } else {
+                player.body.velocity.x = 0;
             }
             // check for collisions
             //this.physics.world.collide(player, this.barrierGroup, this.playerCollision, null, this);

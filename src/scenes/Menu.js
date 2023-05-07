@@ -5,11 +5,12 @@ class Menu extends Phaser.Scene {
 
     create() {
         // Adds tile sprite for the title screen
+        this.title_screen = this.add.tileSprite(0, 0, 640, 780, 'title').setOrigin(0, 0);
 
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
-            fontSize: '24px',
+            fontSize: '30px',
             color: '#FFFFFF',
             stroke: '#FFFFFF',
             strokeThickness: 1,
@@ -22,7 +23,9 @@ class Menu extends Phaser.Scene {
         }
 
         // show menu text
-        this.add.text(centerX - 100, centerY, 'Radical Sisyphus', menuConfig);
+        this.add.text(centerX - 200, centerY + 200, 'Press Space to start!', menuConfig);
+        this.add.text(centerX - 50, centerY + 250, 'OR', menuConfig);
+        this.add.text(centerX - 190, centerY + 300, 'Press (H) for help.', menuConfig);
 
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
