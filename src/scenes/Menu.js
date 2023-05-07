@@ -13,7 +13,7 @@ class Menu extends Phaser.Scene {
             color: '#FFFFFF',
             stroke: '#FFFFFF',
             strokeThickness: 1,
-            align: 'right',
+            align: 'center',
             padding: {
                 top: 5,
                 bottom: 5
@@ -22,13 +22,14 @@ class Menu extends Phaser.Scene {
         }
 
         // show menu text
+        this.add.text(centerX - 100, centerY, 'Radical Sisyphus', menuConfig);
 
         // define keys
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
 
         // menu background music
-        this.music = this.sound.add('bgm_menu');
+        /*this.music = this.sound.add('bgm_menu');
         let musicConfig = {
             mute: false,
             volume: 1,
@@ -38,17 +39,17 @@ class Menu extends Phaser.Scene {
             loop: true,
             delay: 0
         }
-        this.music.play(musicConfig);
+        this.music.play(musicConfig);*/
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if (Phaser.Input.Keyboard.JustDown(keySpace)) {
             // starts the game
-            this.sound.play('sfx_select');
-            this.music.stop();
+            //this.sound.play('sfx_select');
+            //this.music.stop();
             this.scene.start('playScene');
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
+        if (Phaser.Input.Keyboard.JustDown(keyH)) {
             // Display help/instructions
         }
     }

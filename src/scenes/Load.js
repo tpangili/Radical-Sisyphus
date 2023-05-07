@@ -18,11 +18,11 @@ class Load extends Phaser.Scene {
 
         this.load.path = './assets/';
         // load graphics assets
-        this.load.image('sisyphus', './assets/sisyphus_back.png');
-        this.load.image('boulder', './assets/boulder.png');
+        this.load.image('sisyphus', 'img/sisyphus_back.png');
+        this.load.image('boulder', 'img/boulder.png');
+        this.load.image('barrier', 'img/barrier.png');
         // load audio assets
         // load font
-        this.load.bitmapFont('gem', 'font/gem.png', 'font/gem.xml');
     }
 
     create() {
@@ -33,7 +33,7 @@ class Load extends Phaser.Scene {
             console.log('Local storage not supported');
         }
 
-        // go to Title scene
-        this.scene.start('titleScene');
+        // go to Menu scene
+        this.scene.start('menuScene');
     }
 }
