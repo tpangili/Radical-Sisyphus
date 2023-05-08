@@ -23,9 +23,9 @@ class Menu extends Phaser.Scene {
         }
 
         // show menu text
-        this.add.text(centerX - 200, centerY + 200, 'Press Space to start!', menuConfig);
-        this.add.text(centerX - 50, centerY + 250, 'OR', menuConfig);
-        this.add.text(centerX - 190, centerY + 300, 'Press (H) for help.', menuConfig);
+        this.add.text(centerX - 200, centerY + 200, 'Press Space to start', menuConfig);
+        this.add.text(centerX - 100, centerY + 250, '(H) for help', menuConfig);
+        this.add.text(centerX - 100, centerY + 300, '(C) for credits', menuConfig);
 
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

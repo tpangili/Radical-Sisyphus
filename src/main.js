@@ -43,6 +43,7 @@ let w = game.config.width;
 let h = game.config.height;
 const textSpacer = 64;
 let player = null;
+let boulder = null;
 let level;
 let highScore;
 let newHighScore = false;
