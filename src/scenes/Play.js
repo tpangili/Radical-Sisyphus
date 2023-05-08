@@ -36,6 +36,7 @@ class Play extends Phaser.Scene {
         boulder.setCollideWorldBounds(true);
         boulder.setImmovable();
         boulder.setDepth(1);
+        boulder.setBounce(1);
         boulder.setMaxVelocity(1000, 1000);
         boulder.launched = false;      // custom property to track boulder state
  
@@ -73,18 +74,16 @@ class Play extends Phaser.Scene {
         // scroll tile sprite
         this.mountain.tilePositionY -= 4;
 
-        if(!boulder.launched) {
-            // keeps boulder in front of player
-            boulder.body.x = player.body.x;
-        }
+        // keeps boulder in front of player
+        boulder.body.x = player.body.x;
         //boulder.body.y = player.body.y - 10;
 
         // make sure player is still alive
         if(!player.destroyed) {
             // check for arrow key input
-            if(cursors.left.isDown) {
+            if(cursors.left.isDown && !boulder.launched) {
                 player.body.velocity.x -= playerVelocity;
-            } else if(cursors.right.isDown) {
+            } else if(cursors.right.isDown && !boulder.launched) {
                 player.body.velocity.x += playerVelocity;
             } else {
                 player.body.velocity.x = 0;
@@ -95,16 +94,17 @@ class Play extends Phaser.Scene {
                 // launches the boulder forward
                 console.log('LAUNCH!');
                 console.log(player.body.x, player.body.y - 100);
-                //player.current_x = player.body.x;
-                //player.current_y = player.body.y;
-                this.physics.moveTo(boulder, player.body.x, player.body.y - 100, 600);
-                //this.physics.moveTo(boulder, player.current_x, (player.current_y - 100), 600);
-                //this.physics.moveTo(boulder, centerX, centerY, 600);
+                this.physics.moveTo(boulder, player.body.x, player.body.y - 100, 1000);
                 boulder.launched = true;
             }
 
+            if (boulder.launched && boulder.body.y == player.body.y - 10) {
+                boulder.launched = false;
+                boulder.body.y = player.body.y - 10;
+            }
+
             // check for collisions
-            this.physics.world.collide(player, this.barrierGroup, this.playerCollision, null, this);
+            this.physics.world.collide(boulder, this.barrierGroup, this.boulderCollision, null, this);
         }
     }
 }
