@@ -22,7 +22,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
+            //debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -35,7 +35,7 @@ let config = {
 // create game object
 let game = new Phaser.Game(config);
 // reserve keyboard names
-let keySpace, keyH, keyC, keyR;
+let keySpace, keyH, keyC, keyM;
 // set UI sizes
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;

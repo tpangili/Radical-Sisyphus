@@ -24,6 +24,7 @@ class Play extends Phaser.Scene {
         // set up player (physics sprite) and set properties
         player = this.physics.add.sprite(centerX, (h - 100), 'sisyphus').setOrigin(0.5);
         player.setCollideWorldBounds(true);
+        player.setSize(80, 96);
         player.setImmovable();
         player.setMaxVelocity(600, 600);
         player.setDepth(2);
@@ -32,7 +33,7 @@ class Play extends Phaser.Scene {
         //player.current_y = h - 100;
 
         // set up boulder (physics sprite) and set properties
-        boulder = this.physics.add.sprite(player.body.x, player.body.y - 10, 'boulder').setOrigin(0.5);
+        boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 20, 'boulder').setOrigin(0.5);
         boulder.setCollideWorldBounds(true);
         boulder.setImmovable();
         boulder.setDepth(1);
@@ -76,7 +77,7 @@ class Play extends Phaser.Scene {
         this.mountain.tilePositionY -= 4;
 
         // keeps boulder in front of player
-        boulder.body.x = player.body.x;
+        boulder.body.x = (player.body.x - 8);
         //boulder.body.y = player.body.y - 10;
 
         // make sure player is still alive
@@ -93,19 +94,19 @@ class Play extends Phaser.Scene {
             // check for space bar input
             if (Phaser.Input.Keyboard.JustDown(keySpace) && !boulder.launched) {
                 // launches the boulder forward
-                console.log('LAUNCH!');
-                console.log(player.body.x, player.body.y - 100);
                 this.physics.moveTo(boulder, player.body.x, player.body.y - 100, 1000);
                 boulder.launched = true;
             }
 
-            if (boulder.launched && boulder.body.y == player.body.y - 10) {
+            if (boulder.launched && boulder.body.y >= player.body.y - 10) {
                 boulder.launched = false;
-                boulder.body.y = player.body.y - 10;
+                boulder.body.velocity.y = 0;
+                boulder.body.y = player.body.y - 50;
             }
 
             // check for collisions
             this.physics.world.collide(boulder, this.barrierGroup, this.boulderCollision, null, this);
+            this.physics.world.collide(player, this.barrierGroup, this.boulderCollision, null, this);
         }
     }
 
@@ -113,12 +114,24 @@ class Play extends Phaser.Scene {
         player.destroyed = true;                    // turn off collision checking
         this.difficultyTimer.destroy();             // shut down timer
         //this.sound.play('death', { volume: 0.25 }); // play death sound
-        this.cameras.main.shake(2500, 0.0075);      // camera death shake
+        this.cameras.main.shake(2500, 0.0010);      // camera death shake
        
-        // kill player
-        player.destroy();    
+        // send boulder down
+        boulder.setCollideWorldBounds(false);
+        player.setCollideWorldBounds(false);
+        player.setBounce(1);
+        this.physics.moveTo(boulder, player.body.x, game.config.height, 1000);
+        this.physics.moveTo(player, player.body.x, game.config.height, 1000);
+
 
         // switch states after timer expires
-        this.scene.start('gameOverScene');
+        this.time.delayedCall(1000, () => { 
+            this.scene.start('gameOverScene');
+        });
+    }
+
+    enemyCollision() {
+        //this.barrier.destroy();
+        this.physics.moveTo(boulder, player.body.x, player.body.y - 10, 1000);
     }
 }

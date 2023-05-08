@@ -21,10 +21,12 @@ class GameOver extends Phaser.Scene {
 
         // show menu text
         this.add.text(centerX - 200, centerY, 'L + ratio + you died lol', menuConfig);
-        this.add.text(centerX - 100, centerY + 200, 'Press (R) to try again', menuConfig);
+        this.add.text(centerX - 200, centerY + 200, 'Press Space to try again', menuConfig);
+        this.add.text(centerX - 90, centerY + 250, '(M) to go back to menu', menuConfig);
 
         // define keys
-        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
 
         // menu background music
         /*this.music = this.sound.add('bgm_menu');
@@ -41,11 +43,17 @@ class GameOver extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyR)) {
-            // starts the game
+        if (Phaser.Input.Keyboard.JustDown(keySpace)) {
+            // starts the game again
             //this.sound.play('sfx_select');
             //this.music.stop();
             this.scene.start('playScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            // goes back to the menu
+            //this.sound.play('sfx_select');
+            //this.music.stop();
+            this.scene.start('menuScene');
         }
     }
 }
