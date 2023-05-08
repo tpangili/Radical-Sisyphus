@@ -16,7 +16,7 @@ class Barrier extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         // add new barrier when existing barrier hits center Y
-        if(this.newBarrier && this.y > game.config.height - 96) {
+        if(this.newBarrier && this.y > game.config.height - 130) {
             // (recursively) call parent scene method from this context
             this.parentScene.addBarrier(this.parent, this.velocity);
             this.newBarrier = false;
@@ -24,8 +24,9 @@ class Barrier extends Phaser.Physics.Arcade.Sprite {
 
         this.parentScene.physics.moveTo(this, this.x, game.config.height, this.b_velocity);
 
-        console.log('X: ' + this.x);
-        console.log('Y: ' + this.y);
+        // debug feature to check barrier position
+        /*console.log('X: ' + this.x);
+        console.log('Y: ' + this.y);*/
 
         // destroy barrier if it reaches the bottom of the screen
         if(this.y >= game.config.height) {

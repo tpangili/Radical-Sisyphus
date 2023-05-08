@@ -29,13 +29,13 @@ let config = {
             }
         }
     },
-    scene: [ Load, Menu, Play ]
+    scene: [ Load, Menu, Play, GameOver ]
 }
 
 // create game object
 let game = new Phaser.Game(config);
 // reserve keyboard names
-let keySpace, keyH;
+let keySpace, keyH, keyC, keyR;
 // set UI sizes
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;

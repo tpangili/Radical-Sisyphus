@@ -38,6 +38,7 @@ class Play extends Phaser.Scene {
         boulder.setDepth(1);
         boulder.setBounce(1);
         boulder.setMaxVelocity(1000, 1000);
+        boulder.setCircle(48);
         boulder.launched = false;      // custom property to track boulder state
  
         // set up barrier group
@@ -106,5 +107,18 @@ class Play extends Phaser.Scene {
             // check for collisions
             this.physics.world.collide(boulder, this.barrierGroup, this.boulderCollision, null, this);
         }
+    }
+
+    boulderCollision() {
+        player.destroyed = true;                    // turn off collision checking
+        this.difficultyTimer.destroy();             // shut down timer
+        //this.sound.play('death', { volume: 0.25 }); // play death sound
+        this.cameras.main.shake(2500, 0.0075);      // camera death shake
+       
+        // kill player
+        player.destroy();    
+
+        // switch states after timer expires
+        this.scene.start('gameOverScene');
     }
 }
