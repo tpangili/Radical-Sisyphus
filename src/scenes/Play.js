@@ -7,8 +7,11 @@ class Play extends Phaser.Scene {
         // reset parameters
         this.barrierSpeed = 450;
         this.enemySpeed = 500;
-        this.barrierSpeedMax = 1000;
+        this.barrierSpeedMax = 950;
+        this.enemySpeedMax = 1000
         this.boulderSpeed = 1150;
+        level = 0;
+        score = 0;
 
         // account for higher refresh rates
         //this.physics.world.setFPS(60);
@@ -31,8 +34,6 @@ class Play extends Phaser.Scene {
         player.setMaxVelocity(600, 600);
         player.setDepth(2);
         player.destroyed = false;       // custom property to track player life
-        //player.current_x = centerX;
-        //player.current_y = h - 100;
 
         // set up boulder (physics sprite) and set properties
         boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 5, 'boulder').setOrigin(0.5);
@@ -78,6 +79,7 @@ class Play extends Phaser.Scene {
      addBarrier() {
          let speedVariance =  Phaser.Math.Between(0, 50);
          let barrier = new Barrier(this, this.barrierSpeed - speedVariance);
+         //console.log(`INSIDE BARRIER FUNCTION: barrier speed: ${this.barrierSpeed}`);
          barrier.setDepth(0);
          this.barrierGroup.add(barrier);
      }
@@ -86,6 +88,7 @@ class Play extends Phaser.Scene {
      addEnemy() {
         let speedVariance =  Phaser.Math.Between(0, 50);
         let enemy = new Enemy(this, this.enemySpeed - speedVariance);
+        //console.log(`INSIDE ENEMY FUNCTION: enemy speed: ${this.enemySpeed}`);
         this.enemyGroup.add(enemy);
     }
 
@@ -134,7 +137,7 @@ class Play extends Phaser.Scene {
 
     boulderCollision() {
         player.destroyed = true;                    // turn off collision checking
-        this.difficultyTimer.destroy();             // shut down timer
+        this.difficultyTimer.destroy();             // shut down difficulty timer
         //this.sound.play('death', { volume: 0.25 }); // play death sound
         this.cameras.main.shake(2500, 0.0010);      // camera death shake
        
@@ -153,14 +156,36 @@ class Play extends Phaser.Scene {
     }
 
     enemyCollision(object1, object2) {
-        //this.barrier.destroy();
         if (boulder.launched) {
             object2.enemyDefeat = true;
+            score += 5;
+            //console.log(score);
             this.physics.moveTo(boulder, player.body.x, player.body.y - 10, this.boulderSpeed);
             return false;
         }
         else {
             return true;
+        }
+    }
+
+    levelBump() {
+        // increment level
+        level++;
+        // increment score
+        score++;
+        //console.log(score);
+
+        // bump speed every 5 levels (until max is hit)
+        if (level % 5 == 0) {
+            //console.log(`level: ${level}, barrier speed: ${this.barrierSpeed}, enemy speed: ${this.enemySpeed}`);
+            //console.log(`barrier max: ${this.barrierSpeedMax}, enemy max: ${this.enemySpeedMax}`);
+            //this.sound.play('clang', { volume: 0.5 });         // play clang to signal speed up
+            if (this.barrierSpeed < this.barrierSpeedMax) {     // increase barrier speed
+                this.barrierSpeed += 25;
+            }
+            if (this.enemySpeed < this.enemySpeedMax) {         // increase enemy speed
+                this.enemySpeed += 25;
+            }
         }
     }
 }

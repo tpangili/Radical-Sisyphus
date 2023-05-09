@@ -47,6 +47,7 @@ const playerHeight = 96;
 let player = null;
 let boulder = null;
 let level;
+let score;
 let highScore;
 let newHighScore = false;
 let cursors;
