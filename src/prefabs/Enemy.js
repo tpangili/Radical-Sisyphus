@@ -1,7 +1,7 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity) {
         // call Phaser Physics Sprite constructor
-        super(scene, Phaser.Math.Between(96/2, game.config.width - 96/2), -96, 'enemy'); 
+        super(scene, Phaser.Math.Between(playerHeight/2, game.config.width - playerHeight/2), -playerHeight, 'enemy'); 
         
         this.parentScene = scene;               // maintain scene context
 

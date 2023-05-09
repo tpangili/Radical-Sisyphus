@@ -42,6 +42,8 @@ let centerY = game.config.height/2;
 let w = game.config.width;
 let h = game.config.height;
 const textSpacer = 64;
+const playerWidth = 96;
+const playerHeight = 96;
 let player = null;
 let boulder = null;
 let level;
