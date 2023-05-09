@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.barrierSpeedMax = 950;
         this.enemySpeedMax = 1000
         this.boulderSpeed = 1150;
+        this.scrollSpeed = 4;
         level = 0;
         score = 0;
 
@@ -73,6 +74,26 @@ class Play extends Phaser.Scene {
  
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
+
+        // Adds UI elements
+        this.scroll = this.add.image(0, 0, 'ui').setOrigin(0, 0);
+        this.scroll.setDepth(2);
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '30px',
+            color: '#000080',
+            stroke: '#000080',
+            strokeThickness: 1,
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            }
+        }
+        this.scoreText = this.add.text(playerHeight/2, playerHeight/2 - 15, 'SCORE: ' + score, scoreConfig);
+        this.scoreText.setDepth(4);
      }
  
      // create new barriers and add them to existing barrier group
@@ -88,15 +109,14 @@ class Play extends Phaser.Scene {
      addEnemy() {
         let speedVariance =  Phaser.Math.Between(0, 50);
         let enemy = new Enemy(this, this.enemySpeed - speedVariance);
+        enemy.setDepth(1);
         //console.log(`INSIDE ENEMY FUNCTION: enemy speed: ${this.enemySpeed}`);
         this.enemyGroup.add(enemy);
     }
 
     update() {
-        // check key input for restart
-
         // scroll tile sprite
-        this.mountain.tilePositionY -= 4;
+        this.mountain.tilePositionY -= this.scrollSpeed;
 
         // keeps boulder in front of player
         boulder.body.x = (player.body.x - 8);
@@ -173,6 +193,8 @@ class Play extends Phaser.Scene {
         level++;
         // increment score
         score++;
+        // update score display
+        this.scoreText.text = 'SCORE: ' + score;
         //console.log(score);
 
         // bump speed every 5 levels (until max is hit)
@@ -182,10 +204,13 @@ class Play extends Phaser.Scene {
             //this.sound.play('clang', { volume: 0.5 });         // play clang to signal speed up
             if (this.barrierSpeed < this.barrierSpeedMax) {     // increase barrier speed
                 this.barrierSpeed += 25;
+                this.scrollSpeed += 0.25;
             }
             if (this.enemySpeed < this.enemySpeedMax) {         // increase enemy speed
                 this.enemySpeed += 25;
+                this.scrollSpeed += 0.25;
             }
         }
+        //console.log(this.scrollSpeed);
     }
 }

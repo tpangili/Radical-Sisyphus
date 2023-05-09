@@ -20,6 +20,7 @@ class Load extends Phaser.Scene {
         // load graphics assets
         this.load.image('title', 'img/title_screen.png');
         this.load.image('mountain', 'img/mountain.png');
+        this.load.image('ui', 'img/scroll_ui.png');
         this.load.image('sisyphus', 'img/sisyphus_back.png');
         this.load.image('boulder', 'img/boulder.png');
         this.load.image('barrier', 'img/barrier.png');
