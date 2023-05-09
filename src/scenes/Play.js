@@ -6,7 +6,9 @@ class Play extends Phaser.Scene {
     create() {
         // reset parameters
         this.barrierSpeed = 450;
+        this.enemySpeed = 500;
         this.barrierSpeedMax = 1000;
+        this.boulderSpeed = 1150;
 
         // account for higher refresh rates
         //this.physics.world.setFPS(60);
@@ -33,12 +35,12 @@ class Play extends Phaser.Scene {
         //player.current_y = h - 100;
 
         // set up boulder (physics sprite) and set properties
-        boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 20, 'boulder').setOrigin(0.5);
+        boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 5, 'boulder').setOrigin(0.5);
         boulder.setCollideWorldBounds(true);
         boulder.setImmovable();
         boulder.setDepth(1);
         boulder.setBounce(1);
-        boulder.setMaxVelocity(1000, 1000);
+        boulder.setMaxVelocity(1000, 1250);
         boulder.setCircle(48);
         boulder.launched = false;      // custom property to track boulder state
  
@@ -46,9 +48,18 @@ class Play extends Phaser.Scene {
         this.barrierGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
+        // set up enemy group
+        this.enemyGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+
         // wait a few seconds before spawning barriers
         this.time.delayedCall(2500, () => { 
             this.addBarrier(); 
+        });
+        // wait a few seconds before spawning enemies
+        this.time.delayedCall(5000, () => { 
+            this.addEnemy(); 
         });
  
         // set up difficulty timer (triggers callback every second)
@@ -67,8 +78,16 @@ class Play extends Phaser.Scene {
      addBarrier() {
          let speedVariance =  Phaser.Math.Between(0, 50);
          let barrier = new Barrier(this, this.barrierSpeed - speedVariance);
+         barrier.setDepth(0);
          this.barrierGroup.add(barrier);
      }
+
+     // create new enemies and add them to existing barrier group
+     addEnemy() {
+        let speedVariance =  Phaser.Math.Between(0, 50);
+        let enemy = new Enemy(this, this.enemySpeed - speedVariance);
+        this.enemyGroup.add(enemy);
+    }
 
     update() {
         // check key input for restart
@@ -94,7 +113,7 @@ class Play extends Phaser.Scene {
             // check for space bar input
             if (Phaser.Input.Keyboard.JustDown(keySpace) && !boulder.launched) {
                 // launches the boulder forward
-                this.physics.moveTo(boulder, player.body.x, player.body.y - 100, 1000);
+                this.physics.moveTo(boulder, player.body.x, player.body.y - 100, this.boulderSpeed);
                 boulder.launched = true;
             }
 
@@ -104,9 +123,12 @@ class Play extends Phaser.Scene {
                 boulder.body.y = player.body.y - 50;
             }
 
-            // check for collisions
+            // check for barrier collisions
             this.physics.world.collide(boulder, this.barrierGroup, this.boulderCollision, null, this);
             this.physics.world.collide(player, this.barrierGroup, this.boulderCollision, null, this);
+            // check for enemy collisions
+            this.physics.world.collide(boulder, this.enemyGroup, this.boulderCollision, this.enemyCollision, this);
+            this.physics.world.collide(player, this.enemyGroup, this.boulderCollision, null, this);
         }
     }
 
@@ -130,8 +152,15 @@ class Play extends Phaser.Scene {
         });
     }
 
-    enemyCollision() {
+    enemyCollision(object1, object2) {
         //this.barrier.destroy();
-        this.physics.moveTo(boulder, player.body.x, player.body.y - 10, 1000);
+        if (boulder.launched) {
+            object2.enemyDefeat = true;
+            this.physics.moveTo(boulder, player.body.x, player.body.y - 10, this.boulderSpeed);
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

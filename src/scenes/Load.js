@@ -23,6 +23,7 @@ class Load extends Phaser.Scene {
         this.load.image('sisyphus', 'img/sisyphus_back.png');
         this.load.image('boulder', 'img/boulder.png');
         this.load.image('barrier', 'img/barrier.png');
+        this.load.image('enemy', 'img/enemy.png');
         // load audio assets
         // load font
     }
