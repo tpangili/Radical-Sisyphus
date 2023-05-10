@@ -3,11 +3,25 @@
 // 1,000,000 hours
 //
 // Creative Tilt Justification:
-// I will do some voice acting for
-// the player character.
-// I will implement a combat system
-// that involves using the boulder 
-// as a projectile.
+// The game has a really great cartoony and goofy
+// visual style that I am pretty proud of.
+// 
+// The game's main concept riffs off of the endless
+// and futile nature of Sisyphus's punishment from
+// the Greek myth (having to push a boulder up a
+// mountain that always falls back down before reaching
+// the top) by turning that into an endless runner.
+// 
+// On the technical side, I was able to implement
+// a combat system using the physics system
+// that involves using the boulder as a projectile.
+// In order to achieve this, I had to do a lot of
+// experimentation seeing how I could handle the boulder's
+// collision before and after being launched.
+//
+// I also learned about using additional callback functions
+// in collision detection in order to perform additional
+// checks involving enemy collision.
 
 // more strict about accuracy
 'use strict';

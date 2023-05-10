@@ -23,8 +23,11 @@ class Load extends Phaser.Scene {
         this.load.image('ui', 'img/scroll_ui.png');
         this.load.image('sisyphus', 'img/sisyphus_back.png');
         this.load.image('boulder', 'img/boulder.png');
-        this.load.image('barrier', 'img/barrier.png');
+        this.load.image('barrier', 'img/pillar.png');
         this.load.image('enemy', 'img/enemy.png');
+        // load texture atlases
+        this.load.atlas('enemy_atlas', 'img/enemy_atlas.png', 'img/enemy.json');
+        this.load.atlas('boulder_atlas', 'img/boulder_atlas.png', 'img/boulder.json');
         // load audio assets
         // load font
     }

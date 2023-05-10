@@ -27,6 +27,50 @@ class Play extends Phaser.Scene {
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        // enemy animation config
+        this.anims.create({
+            key: 'slither',
+            frameRate: 12,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('enemy_atlas', {
+                prefix: 'enemy_',
+                start: 0,
+                end: 5
+            })
+        })
+        this.anims.create({
+            key: 'defeat',
+            frameRate: 12,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('enemy_atlas', {
+                prefix: 'defeat_',
+                start: 0,
+                end: 0
+            })
+        })
+        this.anims.create({
+            key: 'hit',
+            frameRate: 12,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('enemy_atlas', {
+                prefix: 'hit_',
+                start: 0,
+                end: 4
+            })
+        })
+
+        // boulder animation config
+        this.anims.create({
+            key: 'roll',
+            frameRate: 12,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('boulder_atlas', {
+                prefix: 'boulder_',
+                start: 0,
+                end: 3
+            })
+        })
+
         // set up player (physics sprite) and set properties
         player = this.physics.add.sprite(centerX, (h - 100), 'sisyphus').setOrigin(0.5);
         player.setCollideWorldBounds(true);
@@ -37,7 +81,7 @@ class Play extends Phaser.Scene {
         player.destroyed = false;       // custom property to track player life
 
         // set up boulder (physics sprite) and set properties
-        boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 5, 'boulder').setOrigin(0.5);
+        boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 5, 'boulder_atlas', 'boulder_0').setOrigin(0.5);
         boulder.setCollideWorldBounds(true);
         boulder.setImmovable();
         boulder.setDepth(1);
@@ -92,7 +136,7 @@ class Play extends Phaser.Scene {
                 bottom: 5,
             }
         }
-        this.scoreText = this.add.text(playerHeight/2, playerHeight/2 - 15, 'SCORE: ' + score, scoreConfig);
+        this.scoreText = this.add.text(playerHeight/2, playerHeight/12, 'SCORE: ' + score, scoreConfig);
         this.scoreText.setDepth(4);
      }
  
@@ -121,6 +165,9 @@ class Play extends Phaser.Scene {
         // keeps boulder in front of player
         boulder.body.x = (player.body.x - 8);
         //boulder.body.y = player.body.y - 10;
+
+        // plays boulder animation
+        boulder.play('roll', true);
 
         // make sure player is still alive
         if(!player.destroyed) {

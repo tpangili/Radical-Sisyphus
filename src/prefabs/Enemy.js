@@ -1,7 +1,7 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity) {
         // call Phaser Physics Sprite constructor
-        super(scene, Phaser.Math.Between(playerHeight/2, game.config.width - playerHeight/2), -playerHeight, 'enemy'); 
+        super(scene, Phaser.Math.Between(playerHeight/2, game.config.width - playerHeight/2), -playerHeight, 'enemy_atlas', 'enemy_0'); 
         
         this.parentScene = scene;               // maintain scene context
 
@@ -25,9 +25,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         if(!this.enemyDefeat) {
             this.parentScene.physics.moveTo(this, this.x, game.config.height, this.e_velocity);
+            this.play('slither', true);
         }
         else {
             this.parentScene.physics.moveTo(this, this.x, 0, 1500);
+            this.play('defeat', true);
         }
 
         // debug feature to check enemy position
