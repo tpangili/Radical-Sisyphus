@@ -231,6 +231,9 @@ class Play extends Phaser.Scene {
             return false;
         }
         else {
+            object2.alpha = 0;
+            let pow = this.add.sprite(object2.x, object2.y, 'enemy_atlas', 'hit_0').setOrigin(0, 0);
+            pow.anims.play('hit', false);
             return true;
         }
     }
