@@ -28,6 +28,7 @@ class Load extends Phaser.Scene {
         // load texture atlases
         this.load.atlas('enemy_atlas', 'img/enemy_atlas.png', 'img/enemy.json');
         this.load.atlas('boulder_atlas', 'img/boulder_atlas.png', 'img/boulder.json');
+        this.load.atlas('sisyphus_atlas', 'img/sisyphus_atlas.png', 'img/sisyphus.json');
         // load audio assets
         // load font
     }

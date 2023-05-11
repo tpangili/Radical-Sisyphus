@@ -30,6 +30,10 @@ let config = {
     type: Phaser.CANVAS,
     width: 640,
     height: 780,
+    fps: {
+        target: 60,
+        forceSetTimeOut: false
+    },
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
@@ -40,7 +44,8 @@ let config = {
             gravity: {
                 x: 0,
                 y: 0
-            }
+            },
+            fps: 60
         }
     },
     scene: [ Load, Menu, Play, GameOver ]

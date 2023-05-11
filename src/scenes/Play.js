@@ -3,30 +3,10 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
-    create() {
-        // reset parameters
-        this.barrierSpeed = 450;
-        this.enemySpeed = 500;
-        this.barrierSpeedMax = 950;
-        this.enemySpeedMax = 1000
-        this.boulderSpeed = 1150;
-        this.scrollSpeed = 4;
-        level = 0;
-        score = 0;
-
-        // account for higher refresh rates
-        //this.physics.world.setFPS(60);
-
-        // place tile sprites
-        this.mountain = this.add.tileSprite(0, 0, 640, 780, 'mountain').setOrigin(0, 0);
-
-        // background music
-        //let music = this.sound.add('bgm_normal');
-        //music.play();
-
-        // define keys
-        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+    preload() {
+        // fixes sprite jitter
+        this.physics.world.fixedStep = false;
+        
         // enemy animation config
         this.anims.create({
             key: 'slither',
@@ -71,14 +51,73 @@ class Play extends Phaser.Scene {
             })
         })
 
+        // player animation config
+        this.anims.create({
+            key: 'run',
+            frameRate: 12,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('sisyphus_atlas', {
+                prefix: 'run_',
+                start: 0,
+                end: 2
+            })
+        })
+        this.anims.create({
+            key: 'fail',
+            frameRate: 12,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('sisyphus_atlas', {
+                prefix: 'fail_',
+                start: 0,
+                end: 0
+            })
+        })
+        this.anims.create({
+            key: 'punch',
+            frameRate: 24,
+            repeat: 0,
+            frames: this.anims.generateFrameNames('sisyphus_atlas', {
+                prefix: 'punch_',
+                start: 0,
+                end: 1
+            })
+        })
+    }
+
+    create() {
+        // reset parameters
+        this.barrierSpeed = 450;
+        this.enemySpeed = 500;
+        this.barrierSpeedMax = 950;
+        this.enemySpeedMax = 1000
+        this.boulderSpeed = 1150;
+        this.scrollSpeed = 7;
+        level = 0;
+        score = 0;
+
+        // account for higher refresh rates
+        //this.physics.world.setFPS(60);
+
+        // place tile sprites
+        this.mountain = this.add.tileSprite(0, 0, 640, 780, 'mountain').setOrigin(0, 0);
+
+        // background music
+        //let music = this.sound.add('bgm_normal');
+        //music.play();
+
+        // define keys
+        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        
         // set up player (physics sprite) and set properties
-        player = this.physics.add.sprite(centerX, (h - 100), 'sisyphus').setOrigin(0.5);
+        player = this.physics.add.sprite(centerX, (h - 100), 'sisyphus_atlas', 'run_0').setOrigin(0.5);
         player.setCollideWorldBounds(true);
         player.setSize(80, 96);
         player.setImmovable();
         player.setMaxVelocity(600, 600);
         player.setDepth(2);
         player.destroyed = false;       // custom property to track player life
+        player.punched = false;         // custom property to check if punch animation is playing
 
         // set up boulder (physics sprite) and set properties
         boulder = this.physics.add.sprite(player.body.x - 8, player.body.y - 5, 'boulder_atlas', 'boulder_0').setOrigin(0.5);
@@ -104,9 +143,9 @@ class Play extends Phaser.Scene {
             this.addBarrier(); 
         });
         // wait a few seconds before spawning enemies
-        this.time.delayedCall(5000, () => { 
+        /*this.time.delayedCall(5000, () => { 
             this.addEnemy(); 
-        });
+        });*/
  
         // set up difficulty timer (triggers callback every second)
         this.difficultyTimer = this.time.addEvent({
@@ -119,7 +158,7 @@ class Play extends Phaser.Scene {
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
 
-        // Adds UI elements
+        // adds UI elements
         this.scroll = this.add.image(0, 0, 'ui').setOrigin(0, 0);
         this.scroll.setDepth(2);
 
@@ -149,7 +188,7 @@ class Play extends Phaser.Scene {
          this.barrierGroup.add(barrier);
      }
 
-     // create new enemies and add them to existing barrier group
+     // create new enemies and add them to existing enemy group
      addEnemy() {
         let speedVariance =  Phaser.Math.Between(0, 50);
         let enemy = new Enemy(this, this.enemySpeed - speedVariance);
@@ -164,7 +203,6 @@ class Play extends Phaser.Scene {
 
         // keeps boulder in front of player
         boulder.body.x = (player.body.x - 8);
-        //boulder.body.y = player.body.y - 10;
 
         // plays boulder animation
         boulder.play('roll', true);
@@ -185,12 +223,26 @@ class Play extends Phaser.Scene {
                 // launches the boulder forward
                 this.physics.moveTo(boulder, player.body.x, player.body.y - 100, this.boulderSpeed);
                 boulder.launched = true;
+                player.punched = true;
+                // switches to punch animation
+                player.anims.stop();
+                player.play('punch', false);
+                // waits until punch animation is finished
+                this.time.delayedCall(200, () => { 
+                    player.punched = false; 
+                });
             }
 
+            // places boulder back in player's grasp
             if (boulder.launched && boulder.body.y >= player.body.y - 10) {
                 boulder.launched = false;
                 boulder.body.velocity.y = 0;
                 boulder.body.y = player.body.y - 50;
+            }
+
+            // plays player run animation
+            if (!player.punched) {
+                player.play('run', true);
             }
 
             // check for barrier collisions
@@ -198,46 +250,56 @@ class Play extends Phaser.Scene {
             this.physics.world.collide(player, this.barrierGroup, this.boulderCollision, null, this);
             // check for enemy collisions
             this.physics.world.collide(boulder, this.enemyGroup, this.boulderCollision, this.enemyCollision, this);
-            this.physics.world.collide(player, this.enemyGroup, this.boulderCollision, null, this);
+            this.physics.world.collide(player, this.enemyGroup, this.boulderCollision, this.enemyCollision, this);
         }
     }
 
+    // handles collision that defeats the player
     boulderCollision() {
         player.destroyed = true;                    // turn off collision checking
         this.difficultyTimer.destroy();             // shut down difficulty timer
         //this.sound.play('death', { volume: 0.25 }); // play death sound
         this.cameras.main.shake(2500, 0.0010);      // camera death shake
        
-        // send boulder down
+        // allow boulder and player to fall off screen
         boulder.setCollideWorldBounds(false);
         player.setCollideWorldBounds(false);
         player.setBounce(1);
+        // switches the player's animation to the fail animation
+        player.anims.stop();
+        player.play('fail', true);
+        // send boulder down
         this.physics.moveTo(boulder, player.body.x, game.config.height, 1000);
         this.physics.moveTo(player, player.body.x, game.config.height, 1000);
 
 
-        // switch states after timer expires
+        // switch to game over scene after timer expires
         this.time.delayedCall(1000, () => { 
             this.scene.start('gameOverScene');
         });
     }
 
+    // determines if the enemy or player is defeated after collision
     enemyCollision(object1, object2) {
+        // if boulder collided with enemy after launch
         if (boulder.launched) {
             object2.enemyDefeat = true;
-            score += 5;
+            score += 15;
             //console.log(score);
             this.physics.moveTo(boulder, player.body.x, player.body.y - 10, this.boulderSpeed);
             return false;
         }
+        // if boulder collided with enemy before launch
         else {
             object2.alpha = 0;
             let pow = this.add.sprite(object2.x, object2.y, 'enemy_atlas', 'hit_0').setOrigin(0, 0);
             pow.anims.play('hit', false);
+            object2.destroy();
             return true;
         }
     }
 
+    // handles speed and score increases over time
     levelBump() {
         // increment level
         level++;
