@@ -15,14 +15,18 @@ class GameOver extends Phaser.Scene {
             padding: {
                 top: 5,
                 bottom: 5
-            },
-            fixedWidth: 0
+            }
         }
 
-        // show menu text
-        this.add.text(centerX - 200, centerY, 'L + ratio + you died lol', menuConfig);
-        this.add.text(centerX - 200, centerY + 200, 'Press Space to try again', menuConfig);
-        this.add.text(centerX - 90, centerY + 250, '(M) to go back to menu', menuConfig);
+        // show score text
+        this.scroll = this.add.image(centerX, centerY - 150, 'squish');
+        this.add.text(centerX - 150, centerY - 80, 'GAME OVER, DUDE...', menuConfig);
+        this.add.text(centerX - 200, centerY + 30, `Total Score: ${score}`, menuConfig);
+        this.add.text(centerX - 200, centerY + 80, `High Score: HIGHSCORE`, menuConfig);
+        // show options
+        this.add.text(centerX - 210, centerY + 200, 'Press Space to try again', menuConfig);
+        this.add.text(centerX - 10, centerY + 250, 'OR', menuConfig);
+        this.add.text(centerX - 240, centerY + 300, 'Press (M) to go back to menu', menuConfig);
 
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

@@ -95,9 +95,6 @@ class Play extends Phaser.Scene {
         level = 0;
         score = 0;
 
-        // account for higher refresh rates
-        //this.physics.world.setFPS(60);
-
         // place tile sprites
         this.mountain = this.add.tileSprite(0, 0, 640, 780, 'mountain').setOrigin(0, 0);
 

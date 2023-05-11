@@ -5,7 +5,6 @@ class Load extends Phaser.Scene {
 
     preload() {
         // loading bar
-        // see: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
         let loadingBar = this.add.graphics();
         this.load.on('progress', (value) => {
             loadingBar.clear();                                 // reset fill/line style
@@ -19,6 +18,7 @@ class Load extends Phaser.Scene {
         this.load.path = './assets/';
         // load graphics assets
         this.load.image('title', 'img/title_screen.png');
+        this.load.image('squish', 'img/squish.png');
         this.load.image('mountain', 'img/mountain.png');
         this.load.image('ui', 'img/scroll_ui.png');
         this.load.image('sisyphus', 'img/sisyphus_back.png');
@@ -30,6 +30,7 @@ class Load extends Phaser.Scene {
         this.load.atlas('boulder_atlas', 'img/boulder_atlas.png', 'img/boulder.json');
         this.load.atlas('sisyphus_atlas', 'img/sisyphus_atlas.png', 'img/sisyphus.json');
         // load audio assets
+        this.load.audio('bgm_menu', 'audio/Aces_High.mp3');
         // load font
     }
 

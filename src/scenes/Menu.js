@@ -30,30 +30,42 @@ class Menu extends Phaser.Scene {
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
 
         // menu background music
-        /*this.music = this.sound.add('bgm_menu');
+        this.music = this.sound.add('bgm_menu');
         let musicConfig = {
             mute: false,
-            volume: 1,
+            volume: 0.5,
             rate: 1,
             detune: 0,
             seek: 0,
             loop: true,
             delay: 0
         }
-        this.music.play(musicConfig);*/
+        this.music.play(musicConfig);
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySpace)) {
             // starts the game
             //this.sound.play('sfx_select');
-            //this.music.stop();
+            this.music.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyH)) {
             // Display help/instructions
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+            // Display credits
+            //
+            // "Aces High" Kevin MacLeod (incompetech.com)
+            // Licensed under Creative Commons: By Attribution 4.0 License
+            // http://creativecommons.org/licenses/by/4.0/
+            //
+            // "Protofunk" Kevin MacLeod (incompetech.com)
+            // Licensed under Creative Commons: By Attribution 4.0 License
+            // http://creativecommons.org/licenses/by/4.0/
         }
     }
 }
