@@ -15,6 +15,23 @@ class Load extends Phaser.Scene {
             loadingBar.destroy();
         });
 
+        // menu text configuration
+        let menuConfig = {
+            fontFamily: 'Courier',
+            fontSize: '30px',
+            color: '#FFFFFF',
+            stroke: '#FFFFFF',
+            strokeThickness: 1,
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5
+            }
+        }
+        this.add.text(30, centerY + 80, ' "One must imagine Sisyphus ', menuConfig);
+        this.add.text(30, centerY + 130, ' is a totally bodacious bro!"', menuConfig);
+        this.add.text(30, centerY + 180, '           - Cowabunga Camus', menuConfig);
+
         this.load.path = './assets/';
         // load graphics assets
         this.load.image('title', 'img/title_screen.png');
@@ -32,6 +49,14 @@ class Load extends Phaser.Scene {
         // load audio assets
         this.load.audio('bgm_menu', 'audio/Aces_High.mp3');
         this.load.audio('bgm_play', 'audio/Protofunk.mp3');
+        this.load.audio('sfx_select', 'audio/select.wav');
+        this.load.audio('sfx_radical', 'audio/radical_voice.mp3');
+        this.load.audio('sfx_highscore', 'audio/highscore_voice.mp3');
+        this.load.audio('sfx_punch', 'audio/punch_sound.mp3');
+        this.load.audio('sfx_smack', 'audio/smack.wav');
+        this.load.audio('sfx_pillar', 'audio/pillar_hit.mp3');
+        this.load.audio('sfx_yell', 'audio/man_yell.mp3');
+        this.load.audio('sfx_squish', 'audio/squish.mp3');
         // load font
     }
 

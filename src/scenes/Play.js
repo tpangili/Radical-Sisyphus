@@ -232,6 +232,7 @@ class Play extends Phaser.Scene {
                 player.punched = true;
                 // switches to punch animation
                 player.anims.stop();
+                this.sound.play('sfx_punch', { volume: 0.1 });
                 player.play('punch', false);
                 // waits until punch animation is finished
                 this.time.delayedCall(200, () => { 
@@ -264,7 +265,8 @@ class Play extends Phaser.Scene {
     boulderCollision() {
         player.destroyed = true;                    // turn off collision checking
         this.difficultyTimer.destroy();             // shut down difficulty timer
-        //this.sound.play('death', { volume: 0.25 }); // play death sound
+        this.sound.play('sfx_punch', { volume: 0.1 }); // play defeat sound
+        this.sound.play('sfx_yell');
         this.cameras.main.shake(2500, 0.0010);      // camera death shake
        
         // allow boulder and player to fall off screen
@@ -292,6 +294,7 @@ class Play extends Phaser.Scene {
         if (boulder.launched) {
             object2.enemyDefeat = true;
             score += 15;
+            this.sound.play('sfx_smack', { volume: 0.1 });
             //console.log(score);
             this.physics.moveTo(boulder, player.body.x, player.body.y - 10, this.boulderSpeed);
             return false;

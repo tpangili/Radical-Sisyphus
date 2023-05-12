@@ -7,6 +7,9 @@ class Menu extends Phaser.Scene {
         // Adds tile sprite for the title screen
         this.title_screen = this.add.tileSprite(0, 0, 640, 780, 'title').setOrigin(0, 0);
 
+        // checks if player has pressed start
+        this.start = false;
+
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -47,16 +50,21 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keySpace)) {
+        if (Phaser.Input.Keyboard.JustDown(keySpace) && !this.start) {
             // starts the game
             this.music.stop();
-            //this.sound.play('sfx_select');
-            this.scene.start('playScene');
+            this.start = true;
+            this.sound.play('sfx_select');
+            this.sound.play('sfx_radical');
+            this.time.delayedCall(1500, () => { 
+                this.scene.start('playScene'); 
+            });
+            //this.scene.start('playScene');
         }
-        if (Phaser.Input.Keyboard.JustDown(keyH)) {
+        if (Phaser.Input.Keyboard.JustDown(keyH) && !this.start) {
             // Display help/instructions
         }
-        if (Phaser.Input.Keyboard.JustDown(keyC)) {
+        if (Phaser.Input.Keyboard.JustDown(keyC) && !this.start) {
             // Display credits
             //
             // "Aces High" Kevin MacLeod (incompetech.com)

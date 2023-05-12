@@ -1,6 +1,6 @@
 // Thurmann Pangilinan
 // Radical Sisyphus
-// 1,000,000 hours
+// 25 hours
 //
 // Creative Tilt Justification:
 // The game has a really great cartoony and goofy

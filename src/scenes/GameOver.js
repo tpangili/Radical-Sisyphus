@@ -18,11 +18,37 @@ class GameOver extends Phaser.Scene {
             }
         }
 
+        // play comedic sound effect
+        this.sound.play('sfx_squish');
+
+        // check for high score in local storage
+        if(localStorage.getItem('hiscore') != null) {
+            let storedScore = parseInt(localStorage.getItem('hiscore'));
+            // see if current score has surpassed the stored high score
+            if(score > storedScore) {
+                localStorage.setItem('hiscore', score.toString());
+                highScore = score;
+                newHighScore = true;
+                this.sound.play('sfx_highscore');
+            }
+            else {
+                highScore = parseInt(localStorage.getItem('hiscore'));
+                newHighScore = false;
+            }
+        }
+        // set current score as first high score
+        else {
+            highScore = score;
+            localStorage.setItem('hiscore', highScore.toString());
+            newHighScore = true;
+            this.sound.play('sfx_highscore');
+        }
+
         // show score text
         this.scroll = this.add.image(centerX, centerY - 150, 'squish');
         this.add.text(centerX - 150, centerY - 80, 'GAME OVER, DUDE...', menuConfig);
         this.add.text(centerX - 200, centerY + 30, `Total Score: ${score}`, menuConfig);
-        this.add.text(centerX - 200, centerY + 80, `High Score: HIGHSCORE`, menuConfig);
+        this.add.text(centerX - 200, centerY + 80, `High Score: ${highScore}`, menuConfig);
         // show options
         this.add.text(centerX - 210, centerY + 200, 'Press Space to try again', menuConfig);
         this.add.text(centerX - 10, centerY + 250, 'OR', menuConfig);
@@ -31,31 +57,20 @@ class GameOver extends Phaser.Scene {
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-
-        // menu background music
-        /*this.music = this.sound.add('bgm_menu');
-        let musicConfig = {
-            mute: false,
-            volume: 1,
-            rate: 1,
-            detune: 0,
-            seek: 0,
-            loop: true,
-            delay: 0
-        }
-        this.music.play(musicConfig);*/
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySpace)) {
             // starts the game again
-            //this.sound.play('sfx_select');
+            this.game.sound.stopAll();
+            this.sound.play('sfx_select');
             //this.music.stop();
             this.scene.start('playScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyM)) {
             // goes back to the menu
-            //this.sound.play('sfx_select');
+            this.game.sound.stopAll();
+            this.sound.play('sfx_select');
             //this.music.stop();
             this.scene.start('menuScene');
         }
