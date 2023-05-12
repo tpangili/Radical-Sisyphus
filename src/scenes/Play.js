@@ -148,10 +148,6 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(2500, () => { 
             this.addBarrier(); 
         });
-        // wait a few seconds before spawning enemies
-        /*this.time.delayedCall(5000, () => { 
-            this.addEnemy(); 
-        });*/
  
         // set up difficulty timer (triggers callback every second)
         this.difficultyTimer = this.time.addEvent({
@@ -170,7 +166,7 @@ class Play extends Phaser.Scene {
 
         // display score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Georgia',
             fontSize: '30px',
             color: '#000080',
             stroke: '#000080',
@@ -181,7 +177,7 @@ class Play extends Phaser.Scene {
                 bottom: 5,
             }
         }
-        this.scoreText = this.add.text(playerHeight/2, playerHeight/12, 'SCORE: ' + score, scoreConfig);
+        this.scoreText = this.add.text(playerHeight/2, playerHeight/16, 'SCORE: ' + score, scoreConfig);
         this.scoreText.setDepth(4);
      }
  
@@ -218,9 +214,11 @@ class Play extends Phaser.Scene {
             // check for arrow key input
             if(cursors.left.isDown && !boulder.launched) {
                 player.body.velocity.x -= playerVelocity;
-            } else if(cursors.right.isDown && !boulder.launched) {
+            }
+            else if(cursors.right.isDown && !boulder.launched) {
                 player.body.velocity.x += playerVelocity;
-            } else {
+            }
+            else {
                 player.body.velocity.x = 0;
             }
 
@@ -323,7 +321,6 @@ class Play extends Phaser.Scene {
         if (level % 5 == 0) {
             //console.log(`level: ${level}, barrier speed: ${this.barrierSpeed}, enemy speed: ${this.enemySpeed}`);
             //console.log(`barrier max: ${this.barrierSpeedMax}, enemy max: ${this.enemySpeedMax}`);
-            //this.sound.play('clang', { volume: 0.5 });         // play clang to signal speed up
             if (this.barrierSpeed < this.barrierSpeedMax) {     // increase barrier speed
                 this.barrierSpeed += 25;
                 this.scrollSpeed += 0.25;

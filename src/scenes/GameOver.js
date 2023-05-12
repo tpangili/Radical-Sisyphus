@@ -6,7 +6,7 @@ class GameOver extends Phaser.Scene {
     create() {
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Georgia',
             fontSize: '30px',
             color: '#FFFFFF',
             stroke: '#FFFFFF',
@@ -50,9 +50,9 @@ class GameOver extends Phaser.Scene {
         this.add.text(centerX - 200, centerY + 30, `Total Score: ${score}`, menuConfig);
         this.add.text(centerX - 200, centerY + 80, `High Score: ${highScore}`, menuConfig);
         // show options
-        this.add.text(centerX - 210, centerY + 200, 'Press Space to try again', menuConfig);
-        this.add.text(centerX - 10, centerY + 250, 'OR', menuConfig);
-        this.add.text(centerX - 240, centerY + 300, 'Press (M) to go back to menu', menuConfig);
+        this.add.text(centerX, centerY + 200, 'Press Space to try again', menuConfig).setOrigin(0.5, 0.5);
+        this.add.text(centerX, centerY + 250, 'OR', menuConfig).setOrigin(0.5, 0.5);
+        this.add.text(centerX, centerY + 300, 'Press (M) to go back to menu', menuConfig).setOrigin(0.5, 0.5);
 
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

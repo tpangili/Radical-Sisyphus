@@ -12,8 +12,8 @@ class Menu extends Phaser.Scene {
 
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '30px',
+            fontFamily: 'Georgia',
+            fontSize: '40px',
             color: '#FFFFFF',
             stroke: '#FFFFFF',
             strokeThickness: 1,
@@ -26,7 +26,7 @@ class Menu extends Phaser.Scene {
         }
 
         // show menu text
-        this.add.text(centerX - 200, centerY + 200, 'Press Space to start', menuConfig);
+        this.add.text(centerX - 170, centerY + 180, 'Press Space to start', menuConfig);
         this.add.text(centerX - 100, centerY + 250, '(H) for help', menuConfig);
         this.add.text(centerX - 100, centerY + 300, '(C) for credits', menuConfig);
 

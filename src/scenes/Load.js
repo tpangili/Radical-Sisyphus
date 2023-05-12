@@ -17,7 +17,7 @@ class Load extends Phaser.Scene {
 
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Georgia',
             fontSize: '30px',
             color: '#FFFFFF',
             stroke: '#FFFFFF',
@@ -28,9 +28,9 @@ class Load extends Phaser.Scene {
                 bottom: 5
             }
         }
-        this.add.text(30, centerY + 80, ' "One must imagine Sisyphus ', menuConfig);
-        this.add.text(30, centerY + 130, ' is a totally bodacious bro!"', menuConfig);
-        this.add.text(30, centerY + 180, '           - Cowabunga Camus', menuConfig);
+        this.add.text(centerX, centerY + 80, ' "One must imagine Sisyphus ', menuConfig).setOrigin(0.5, 0.5);
+        this.add.text(centerX, centerY + 130, ' is a totally bodacious bro!"', menuConfig).setOrigin(0.5, 0.5);
+        this.add.text(centerX + 50, centerY + 180, '           - Cowabunga Camus', menuConfig).setOrigin(0.5, 0.5);
 
         this.load.path = './assets/';
         // load graphics assets

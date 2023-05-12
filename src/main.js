@@ -57,12 +57,11 @@ let config = {
 let game = new Phaser.Game(config);
 // reserve keyboard names
 let keySpace, keyH, keyC, keyM;
-// set UI sizes
+// miscellaneous variables for future scenes
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;
 let w = game.config.width;
 let h = game.config.height;
-const textSpacer = 64;
 const playerWidth = 96;
 const playerHeight = 96;
 let player = null;

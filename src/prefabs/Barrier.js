@@ -6,13 +6,13 @@ class Barrier extends Phaser.Physics.Arcade.Sprite {
         this.parentScene = scene;               // maintain scene context
 
         // set up physics sprite
-        this.parentScene.add.existing(this);    // add to existing scene, displayList, updateList
+        this.parentScene.add.existing(this);            // add to existing scene, displayList, updateList
         this.parentScene.physics.add.existing(this);    // add to physics system
         this.setImmovable();
         this.b_velocity = velocity;  
         this.setCollideWorldBounds(false);                  
         this.newBarrier = true;                 // custom property to control barrier spawning
-        this.newEnemy = true;                 // custom property to control enemy spawning
+        this.newEnemy = true;                   // custom property to control enemy spawning
     }
 
     update() {
