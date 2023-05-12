@@ -63,6 +63,10 @@ class Menu extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(keyH) && !this.start) {
             // Display help/instructions
+            this.music.stop();
+            this.sound.play('sfx_select');
+            this.sound.play('sfx_help');
+            this.scene.start('helpScene');
         }
         if (Phaser.Input.Keyboard.JustDown(keyC) && !this.start) {
             // Display credits

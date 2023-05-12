@@ -50,7 +50,7 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Menu, Play, GameOver ]
+    scene: [ Load, Menu, Help, Play, GameOver ]
 }
 
 // create game object

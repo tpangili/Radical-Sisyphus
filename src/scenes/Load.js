@@ -46,18 +46,19 @@ class Load extends Phaser.Scene {
         this.load.atlas('enemy_atlas', 'img/enemy_atlas.png', 'img/enemy.json');
         this.load.atlas('boulder_atlas', 'img/boulder_atlas.png', 'img/boulder.json');
         this.load.atlas('sisyphus_atlas', 'img/sisyphus_atlas.png', 'img/sisyphus.json');
+        this.load.atlas('help_atlas', 'img/help_atlas.png', 'img/help.json');
         // load audio assets
         this.load.audio('bgm_menu', 'audio/Aces_High.mp3');
         this.load.audio('bgm_play', 'audio/Protofunk.mp3');
         this.load.audio('sfx_select', 'audio/select.wav');
         this.load.audio('sfx_radical', 'audio/radical_voice.mp3');
+        this.load.audio('sfx_help', 'audio/help_voice.mp3');
         this.load.audio('sfx_highscore', 'audio/highscore_voice.mp3');
         this.load.audio('sfx_punch', 'audio/punch_sound.mp3');
         this.load.audio('sfx_smack', 'audio/smack.wav');
         this.load.audio('sfx_pillar', 'audio/pillar_hit.mp3');
         this.load.audio('sfx_yell', 'audio/man_yell.mp3');
         this.load.audio('sfx_squish', 'audio/squish.mp3');
-        // load font
     }
 
     create() {

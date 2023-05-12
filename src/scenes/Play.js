@@ -177,7 +177,7 @@ class Play extends Phaser.Scene {
                 bottom: 5,
             }
         }
-        this.scoreText = this.add.text(playerHeight/2, playerHeight/16, 'SCORE: ' + score, scoreConfig);
+        this.scoreText = this.add.text(playerHeight/2, playerHeight/20, 'SCORE: ' + score, scoreConfig);
         this.scoreText.setDepth(4);
      }
  
