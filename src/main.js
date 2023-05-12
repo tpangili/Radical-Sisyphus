@@ -11,6 +11,8 @@
 // the Greek myth (having to push a boulder up a
 // mountain that always falls back down before reaching
 // the top) by turning that into an endless runner.
+//
+// I also did some light voice acting for the main character.
 // 
 // On the technical side, I was able to implement
 // a combat system using the physics system

@@ -99,8 +99,17 @@ class Play extends Phaser.Scene {
         this.mountain = this.add.tileSprite(0, 0, 640, 780, 'mountain').setOrigin(0, 0);
 
         // background music
-        //let music = this.sound.add('bgm_normal');
-        //music.play();
+        this.music = this.sound.add('bgm_play');
+        let musicConfig = {
+            mute: false,
+            volume: 0.5,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.music.play(musicConfig);
 
         // define keys
         keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -272,6 +281,7 @@ class Play extends Phaser.Scene {
 
         // switch to game over scene after timer expires
         this.time.delayedCall(1000, () => { 
+            this.music.stop();
             this.scene.start('gameOverScene');
         });
     }

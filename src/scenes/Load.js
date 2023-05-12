@@ -31,6 +31,7 @@ class Load extends Phaser.Scene {
         this.load.atlas('sisyphus_atlas', 'img/sisyphus_atlas.png', 'img/sisyphus.json');
         // load audio assets
         this.load.audio('bgm_menu', 'audio/Aces_High.mp3');
+        this.load.audio('bgm_play', 'audio/Protofunk.mp3');
         // load font
     }
 
