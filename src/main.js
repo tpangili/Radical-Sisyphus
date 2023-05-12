@@ -1,6 +1,6 @@
 // Thurmann Pangilinan
 // Radical Sisyphus
-// 25 hours
+// 30 hours
 //
 // Creative Tilt Justification:
 // The game has a really great cartoony and goofy
@@ -23,7 +23,10 @@
 //
 // I also learned about using additional callback functions
 // in collision detection in order to perform additional
-// checks involving enemy collision.
+// checks involving enemy collision. I had to research
+// how the collision detection handles individual
+// children from a group so I could make changes to
+// individual enemy objects from the enemyGroup.
 
 // more strict about accuracy
 'use strict';
@@ -50,8 +53,11 @@ let config = {
             fps: 60
         }
     },
-    scene: [ Load, Menu, Help, Play, GameOver ]
+    scene: [ Load, Menu, Help, Credits, Play, GameOver ]
 }
+
+// uncomment to clear high score from local storage
+//localStorage.clear();
 
 // create game object
 let game = new Phaser.Game(config);

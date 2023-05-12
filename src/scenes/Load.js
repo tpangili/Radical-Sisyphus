@@ -35,6 +35,7 @@ class Load extends Phaser.Scene {
         this.load.path = './assets/';
         // load graphics assets
         this.load.image('title', 'img/title_screen.png');
+        this.load.image('credits', 'img/credits.png');
         this.load.image('squish', 'img/squish.png');
         this.load.image('mountain', 'img/mountain.png');
         this.load.image('ui', 'img/scroll_ui.png');
@@ -53,6 +54,7 @@ class Load extends Phaser.Scene {
         this.load.audio('sfx_select', 'audio/select.wav');
         this.load.audio('sfx_radical', 'audio/radical_voice.mp3');
         this.load.audio('sfx_help', 'audio/help_voice.mp3');
+        this.load.audio('sfx_credits', 'audio/credits_voice.mp3');
         this.load.audio('sfx_highscore', 'audio/highscore_voice.mp3');
         this.load.audio('sfx_punch', 'audio/punch_sound.mp3');
         this.load.audio('sfx_smack', 'audio/smack.wav');

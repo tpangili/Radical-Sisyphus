@@ -70,14 +70,10 @@ class Menu extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(keyC) && !this.start) {
             // Display credits
-            //
-            // "Aces High" Kevin MacLeod (incompetech.com)
-            // Licensed under Creative Commons: By Attribution 4.0 License
-            // http://creativecommons.org/licenses/by/4.0/
-            //
-            // "Protofunk" Kevin MacLeod (incompetech.com)
-            // Licensed under Creative Commons: By Attribution 4.0 License
-            // http://creativecommons.org/licenses/by/4.0/
+            this.music.stop();
+            this.sound.play('sfx_select');
+            this.sound.play('sfx_credits');
+            this.scene.start('creditsScene');
         }
     }
 }
