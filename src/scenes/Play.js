@@ -299,10 +299,14 @@ class Play extends Phaser.Scene {
         }
         // if boulder collided with enemy before launch
         else {
+            let pow = this.add.sprite(object2.x, object2.y, 'enemy_atlas', 'hit_0').setOrigin(0.5, 0.5);
             object2.alpha = 0;
-            let pow = this.add.sprite(object2.x, object2.y, 'enemy_atlas', 'hit_0').setOrigin(0, 0);
-            pow.anims.play('hit', false);
             object2.destroy();
+            pow.anims.play('hit', false);
+            // ensures enemy is gone after hit animation
+            this.time.delayedCall(1000, () => { 
+                pow.destroy();
+            });
             return true;
         }
     }
