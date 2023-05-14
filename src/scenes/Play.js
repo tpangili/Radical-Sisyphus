@@ -159,6 +159,9 @@ class Play extends Phaser.Scene {
  
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
+        // add WASD support
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         // adds UI elements
         this.scroll = this.add.image(0, 0, 'ui').setOrigin(0, 0);
@@ -212,10 +215,10 @@ class Play extends Phaser.Scene {
         // make sure player is still alive
         if(!player.destroyed) {
             // check for arrow key input
-            if(cursors.left.isDown && !boulder.launched) {
+            if((cursors.left.isDown && !boulder.launched) || (keyA.isDown && !boulder.launched)) {
                 player.body.velocity.x -= playerVelocity;
             }
-            else if(cursors.right.isDown && !boulder.launched) {
+            else if((cursors.right.isDown && !boulder.launched) || (keyD.isDown && !boulder.launched)) {
                 player.body.velocity.x += playerVelocity;
             }
             else {

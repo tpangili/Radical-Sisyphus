@@ -9,11 +9,13 @@ class Credits extends Phaser.Scene {
 
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
+        // add WASD support
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     }
 
     update() {
         // go back to menu scene
-        if (Phaser.Input.Keyboard.JustDown(cursors.left)) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.left) || Phaser.Input.Keyboard.JustDown(keyA)) {
             this.sound.play('sfx_select');
             this.scene.start('menuScene');
         }

@@ -12,11 +12,13 @@ class Help extends Phaser.Scene {
 
         // set up cursor keys
         cursors = this.input.keyboard.createCursorKeys();
+        // add WASD support
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     }
 
     update() {
         // go to the next help page
-        if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+        if (Phaser.Input.Keyboard.JustDown(cursors.right) || Phaser.Input.Keyboard.JustDown(keyD)) {
             // go to next frame
             this.sound.play('sfx_select');
             this.page += 1;
